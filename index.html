@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Action ou Vérité - Romantique</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #ffe6f0;
+      color: #d63384;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+      height: 100vh;
+    }
+    header {
+      background-color: #ffb6c1;
+      padding: 20px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    .container {
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .rules {
+      background-color: white;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #ff4d88;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 15px 25px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(255, 77, 136, 0.4);
+    }
+    button:hover {
+      transform: scale(1.05);
+      background-color: #e03e6e;
+    }
+    #output {
+      font-size: 1.5em;
+      margin-top: 20px;
+      background-color: white;
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Animation cœur flottant */
+    .heart {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      background-color: #ff4d88;
+      clip-path: polygon(
+        50% 0%,
+        100% 35%,
+        80% 100%,
+        50% 80%,
+        20% 100%,
+        0% 35%
+      );
+      animation: floatUp 5s linear infinite;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-50px) scale(1.2);
+      }
+      100% {
+        transform: translateY(-150vh) scale(0.8);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>💖 Action ou Vérité - Romantique 💖</h1>
+  <p><em>Par l'Arbitre Officiel de l'Amour 💌</em></p>
+</header>
+
+<div class="container">
+  <div class="rules">
+    <h2>📜 Règles du jeu</h2>
+    <p>1. Décidez qui commence.</p>
+    <p>2. Posez la question : <strong>Action ou Vérité ?</strong></p>
+    <p>3. Si Vérité → répondre honnêtement 💬.</p>
+    <p>4. Si Action → réaliser le petit geste proposé 💕.</p>
+    <p>5. Le but : s’amuser, se rapprocher et créer des souvenirs doux 🌸.</p>
+  </div>
+
+  <h2>🎯 Jouons !</h2>
+  <button onclick="play('action')">Action</button>
+  <button onclick="play('verite')">Vérité</button>
+
+  <div id="output">Clique sur un bouton pour commencer...</div>
+</div>
+
+<script>
+  // Nouvelle liste des actions romantique
+  const actions = [
+    "Fais-moi un câlin de 1 minute sans rien dire 💖",
+    "Prends mes deux mains et regarde-moi dans les yeux 🤗",
+    "Écris « Je t’aime » sur ma main avec ton doigt 💌",
+    "Pose ta tête sur mon épaule et ferme les yeux 1 minute 🌸",
+    "Donne-moi un surnom super mignon 🐰",
+    "Chante-moi (même doucement) un bout de chanson romantique 🎵",
+    "Dessine un cœur dans l’air avec ton doigt en me regardant ✨",
+    "Fais semblant de m’offrir une bague 💍",
+    "Fais un selfie avec moi avec une grimace mignonne 📸",
+    "Touche le bout de mon nez avec le tien 👃",
+    "Chuchote à mon oreille quelque chose de tendre 🤫",
+    "Complimente-moi sur quelque chose que j’ignore 🥰",
+    "Ferme les yeux et décris-moi notre prochain rendez-vous 🌆",
+    "Mets-toi dans mes bras et reste immobile comme un ours en peluche 1 minute 🐻",
+    "Offrir un petit baiser doux sur le front 🍓",
+    "Dessine notre couple sur un papier (ou mime-le avec tes mains) 🖌️",
+    "Fais-moi un massage des mains pendant 1 minute 🎁",
+    "Pose ta main sur mon cœur et dis-moi trois mots doux 💓",
+    "Caresse doucement ma joue avec ta main 😌",
+    "Trace une étoile sur ma main avec ton doigt ✨",
+    "Lis-moi un passage romantique de ton livre ou film préféré 📖",
+    "Ferme les yeux et imagine qu’on regarde les étoiles ensemble 🌙",
+    "Fais semblant de m’embrasser à travers ta main 💋",
+    "Prends ma main et garde-la jusqu’au prochain tour 👐",
+    "Fais un high-five suivi d’un câlin 💫"
+  ];
+
+  // Liste des vérités (inchangée, mais tu peux aussi me demander de la modifier)
+  const verites = [
+    "Quel est ton plus beau souvenir avec moi ?",
+    "Quel petit geste te fait craquer ?",
+    "Quand as-tu su que tu m’aimais ?",
+    "Quelle chanson te fait penser à moi ?",
+    "Quelle est ta plus grande envie à partager avec moi ?",
+    "Quel endroit aimerais-tu visiter ensemble ?",
+    "Quelle odeur te rappelle notre relation ?",
+    "Quelle est ta plus belle émotion depuis qu’on est ensemble ?",
+    "Si tu pouvais revivre un moment avec moi, lequel choisirais-tu ?",
+    "Qu’aimes-tu le plus chez moi ?",
+    "Si on écrivait un livre sur nous, quel serait le titre ?",
+    "Quelle couleur représente notre amour ?",
+    "Si je disparaissais une journée, que ferais-tu ?",
+    "Quel moment précis t’a marqué dans notre relation ?",
+    "Si on devait se marier demain, où aimerais-tu que ce soit ?",
+    "Quelle phrase aimerais-tu que je te dise tous les jours ?",
+    "Si tu pouvais me surprendre, comment le ferais-tu ?",
+    "Quel animal nous représente le mieux ?",
+    "Quelle est ta plus grande peur amoureuse ?",
+    "Quelle saison décrit le mieux notre relation ?",
+    "Si tu devais écrire une lettre pour moi, que dirait-elle ?",
+    "Quel plat aimerais-tu partager avec moi ?",
+    "Quel est ton rêve pour nous dans 5 ans ?",
+    "Quelle photo de nous préfères-tu ?",
+    "Quelle est la première chose que tu veux me dire demain matin ?"
+  ];
+
+  // Effet sonore kawaii doux au clic (petit son "pop")
+  const sound = new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg');
+
+  function play(type) {
+    const list = type === 'action' ? actions : verites;
+    const random = list[Math.floor(Math.random() * list.length)];
+    const output = document.getElementById('output');
+
+    // Animation fade out puis fade in
+    output.style.opacity = 0;
+    setTimeout(() => {
+      output.innerText = random;
+      output.style.opacity = 1;
+    }, 300);
+
+    // Jouer le son
+    sound.currentTime = 0;
+    sound.play();
+  }
+
+  // Créer des cœurs flottants en fond
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+    heart.style.opacity = (0.4 + Math.random() * 0.6).toFixed(2);
+    document.body.appendChild(heart);
+
+    // Supprimer le cœur après l'animation
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }
+
+  // Générer un cœur toutes les 400 ms
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
